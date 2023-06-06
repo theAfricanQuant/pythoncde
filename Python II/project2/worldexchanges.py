@@ -12,6 +12,7 @@ quandl.ApiConfig.api_key = "wMzVVAMbc6y2yxCVGEGh"
 mydata = quandl.get("BCIW/_SPXT")
 print(mydata)
 """
+
 import pandas as pd
 import fix_yahoo_finance as yf
 from datetime import datetime, timedelta
@@ -38,7 +39,7 @@ indices = []
 for l in range(0, len(exchanges)):
     pointer = l + 1
     if (pointer < 10):
-        pointer = "0"+str(pointer)
+        pointer = f"0{str(pointer)}"
     print(pointer,"  ->", exchanges['COUNTRY'][l].upper(),"--",exchanges['EXCHANGE'][l].upper())
 
 def str_replace(sbjct, srch, rplc):
@@ -49,9 +50,7 @@ def str_replace(sbjct, srch, rplc):
         return sbjct.replace(srch[0], rplc[0])
 
     lst = sbjct.split(srch[0])
-    reslst = []
-    for s in lst:
-        reslst.append(str_replace(s, srch[1:], rplc[1:]))
+    reslst = [str_replace(s, srch[1:], rplc[1:]) for s in lst]
     return rplc[0].join(reslst);
 
 def getdata(exc):
@@ -75,11 +74,10 @@ def getdata(exc):
         
     
 def findInlist(xkey):
-    if (xkey < len(exchanges) and xkey > -1):
-        indices.append(exchanges['CODE'][xkey])
-        return True
-    else:
+    if xkey >= len(exchanges) or xkey <= -1:
         return False
+    indices.append(exchanges['CODE'][xkey])
+    return True
     
 def plotmatrix(dmatrix):
     print("Monthly Return Correlation Coefficient Data Set\n")

@@ -38,15 +38,10 @@ This function look through the tickers in the csv file to find the ticker entere
 by the user if it available.
 """
 def findInlist(stock):
-    counter = 0
-    for i in range(0, len(tickers)):
-        #compare the enter tickers with the tickers in the csv file 
-        if (stock == tickers['ticker'][i]):
-            counter += 1
-    if counter > 0:
-        return True
-    else:
-        return False
+    counter = sum(
+        1 for i in range(0, len(tickers)) if (stock == tickers['ticker'][i])
+    )
+    return counter > 0
             
 
 """
@@ -54,8 +49,7 @@ this function fetch data from yahoo finance using the supplied ticker with the
 specified startdate and enddate using the pandas_datareader library
 """      
 def getdata(ticker,sdate,edate):
-    data = pdr.get_data_yahoo(ticker, start=sdate, end=edate)
-    return data
+    return pdr.get_data_yahoo(ticker, start=sdate, end=edate)
 
 """
 This function retrieve the date and adjusted closing price columns

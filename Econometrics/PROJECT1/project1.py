@@ -12,14 +12,13 @@ def get_avg(dataset):
 
 
 def get_daily_ret(dataset):
-    daily_returns = []
-    daily_returns.append(0)
-    for ptr in range(0, len(dataset)):
-        if ptr < len(dataset)-1:
-            daily_returns.append(
-                (dataset['Adj Close'][ptr+1] -
-                    dataset['Adj Close'][ptr])/
-                    dataset['Adj Close'][ptr])
+    daily_returns = [0]
+    daily_returns.extend(
+        (dataset['Adj Close'][ptr + 1] - dataset['Adj Close'][ptr])
+        / dataset['Adj Close'][ptr]
+        for ptr in range(0, len(dataset))
+        if ptr < len(dataset) - 1
+    )
     return daily_returns
 
 jpm_data = pdr.get_data_yahoo("JPM", "2015-04-01", "2015-06-25", asobject=True, adjusted=True)

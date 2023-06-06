@@ -8,6 +8,7 @@ WQU 613 Econometrics – 0418 - A
 Final Project
 Forecasting Gold Price
 """
+
 from scipy import stats
 from pandas.plotting import autocorrelation_plot
 from statsmodels.tsa.arima_model import ARIMA
@@ -56,7 +57,7 @@ print("beta = ", beta, "alpha = ",alpha)
 print("R-Square = ", r_value**2)
 print("P-value = ", p_value)
 
-forecast_gold = np.exp(beta*gold[len(gold)-1]+alpha)
+forecast_gold = np.exp(beta * gold[-1] + alpha)
 print("Forecasted gold price for 2015\n", forecast_gold)
 
 plt.plot(gold2)
